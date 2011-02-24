@@ -1,0 +1,79 @@
+jsonprettify
+============
+
+
+An utility to reformat JSON-documents with newlines and indention
+according to the document structure.
+
+_ jsonprettify _ follows the convention by which the commas a are
+place before the next item instead of after the previous item.  This
+makes it easier to spot missing commas and incorrect document structure
+in general.
+
+If you are looking for conventional formatting consider `prettify_json.rb`
+supplied with the json ruby gem.
+
+
+
+Command-line Application 
+------------------------
+
+For example: `jsonprettify < package.json` reformats the file
+package.json and prints it out to _stout_. For in-place formatting
+it is possible to use the `-i` and `-o` specifying the same file,
+e.g. `jsonprettify -i package.json -o package.json`.
+
+
+### Options
+
+* `--compact` of `-c` will use the standard `JSON.stringify` command
+ in node. This will result in a compact representation without 
+ newlines and spaces.
+
+* if '-i' is not specified, _stdin_ is used
+
+* same as above with '-o' and _stdout_
+
+There are more options. Invoke `jsonprettify --help` for the complete list of available options.
+
+Library
+-------
+
+An example in [coffee-script](http://jashkenas.github.com/coffee-script/) would look like: 
+
+    jsonprettify = require 'jsonprettify'
+
+    nice_json = jsonprettify.json2prettyjson '{"someObject": {"somekey":"somevalue","boolkey":true},"someArray":["abc",3,1,2,true,false]}'
+
+and if we output `nice_json` we would get:
+
+    { "someArray" : 
+      [ 1
+      , 2
+      , 3
+      , "abc"
+      , false
+      , true
+      ] 
+    , "someObject" : 
+      { "boolkey" : true
+      , "somekey" : "somevalue"
+      } 
+    } 
+
+Note that the order has changed to be lexicographically sorted.
+However, depending on the input it might be necessary prettify 
+several times to actually get the correct lexicographic order.
+
+### Options
+
+_json2prettyjson_ accepts an additional option argument, .e.g:
+
+    opts = 
+      { "indent" : "  "
+      , sort : true
+      }
+
+The values as given above are the defaults.
+
+
