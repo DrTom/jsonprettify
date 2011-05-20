@@ -6,18 +6,23 @@
 
 ###
 
+###
+Copyright 2011 Thomas Schank
+Released under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3
+###
+
 path = require('path')
 fs = require('fs')
 main = path.join(path.dirname(fs.realpathSync(__filename)), '../')
 lib = main + "lib/"
 
 _ = require 'underscore'
-simplecli = require 'simplecli'
+helpers = require 'drtoms-nodehelpers'
 
 toprettyjson = require (lib + 'toprettyjson')
 
-inBuffer= simplecli.string.createStringBuffer()
-outBuffer= simplecli.string.createStringBuffer()
+inBuffer= helpers.stringhelper.createStringBuffer()
+outBuffer= helpers.stringhelper.createStringBuffer()
 
 readStdin = true
 outfile = undefined
@@ -31,7 +36,7 @@ exports.run = () ->
 
   opts =
     { indent : "  "
-    , sort : true
+    , sort : false
     }
 
   options = [
@@ -54,10 +59,10 @@ exports.run = () ->
       , value : true
       , callback : (value) -> outfile = value
       }
-    , { short: "S"
-      , long : "noSort"
-      , description: "arrays and objects are sorted lexicographically by default, disable sorting;"
-      , callback : () -> opts.sort = false
+    , { short: "s"
+      , long : "sort"
+      , description: "try to sort arrays and objects lexicographically"
+      , callback : () -> opts.sort = true
       }
     , { short: "r"
       , long : "replace"
@@ -73,12 +78,12 @@ exports.run = () ->
       }
   ]
 
-  simplecli.argparser.parse
+  helpers.argparser.parse
     options: options
     help: true
 
 
-  # TODO not DRY, should be in simplecli
+  # not DRY, should it be in helpers ??? 
   read = (cont) ->
     if readStdin
       stdin = process.openStdin()
@@ -90,7 +95,7 @@ exports.run = () ->
     else
       cont()
 
-  # TODO not DRY, should be in simplecli
+  # not DRY, should it be in helpers ???
   write = (data,cont) ->
     if not outfile?
       process.stdout.write data

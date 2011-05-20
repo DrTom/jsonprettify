@@ -7,7 +7,7 @@
   { "jsonprettify" : "./bin/jsonprettify"
   } 
 , "dependencies" : 
-  { "simplecli" : "*"
+  { "drtoms-nodehelpers" : "*"
   , "underscore" : "*"
   } 
 , "description" : "prettify JSON documents"
@@ -24,5 +24,5 @@
   [ "JSON"
   , "prettify"
   ] 
-, "version" : "0.1.0"
+, "version" : "0.1.1"
 } 

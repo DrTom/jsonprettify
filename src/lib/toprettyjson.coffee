@@ -1,12 +1,18 @@
-simplecli = require 'simplecli'
+###
+Copyright 2011 Thomas Schank
+Released under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3
+###
+
+helpers = require 'drtoms-nodehelpers'
 _ = require 'underscore'
 
-println = simplecli.printer.println
+println = helpers.printer.println
 
+# this is a recursive algorithm
 obj2prettyjson= (level,obj,buffer,opts) ->
   first = true
   indent = if opts? and opts.indent? then opts.indent else "  "
-  sort = if opts? and opts.sort? then opts.sort else true
+  sort = if opts? and opts.sort? then opts.sort else false
 
   line = (s) ->
     doindent = (i) ->
@@ -46,7 +52,7 @@ exports.obj2prettyjson= obj2prettyjson
 
 
 json2prettyjson = (injson,opts) ->
-  outBuffer = simplecli.string.createStringBuffer()
+  outBuffer = helpers.stringhelper.createStringBuffer()
   obj2prettyjson 1, (JSON.parse injson), outBuffer, opts
   outBuffer.toString()
 

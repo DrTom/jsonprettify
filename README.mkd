@@ -3,7 +3,7 @@ jsonprettify
 
 
 An utility to reformat JSON-documents with newlines and indention
-according to the document structure.
+according to the document structure (or my personal taste if you like).
 
 _ jsonprettify _ follows the convention by which the commas a are
 place before the next item instead of after the previous item.  This
@@ -12,7 +12,6 @@ in general.
 
 If you are looking for conventional formatting consider `prettify_json.rb`
 supplied with the json ruby gem.
-
 
 
 Command-line Application 
@@ -43,9 +42,40 @@ An example in [coffee-script](http://jashkenas.github.com/coffee-script/) would 
 
     jsonprettify = require 'jsonprettify'
 
-    nice_json = jsonprettify.json2prettyjson '{"someObject": {"somekey":"somevalue","boolkey":true},"someArray":["abc",3,1,2,true,false]}'
+    pretty_json = jsonprettify.json2prettyjson '{"someObject": {"somekey":"somevalue","boolkey":true},"someArray":["abc",3,1,2,true,false]}'
 
-and if we output `nice_json` we would get:
+and if we output `pretty_json` we would get:
+
+    { "someObject" : 
+      { "somekey" : "somevalue"
+      , "boolkey" : true
+      } 
+    , "someArray" : 
+      [ "abc"
+      , 3
+      , 1
+      , 2
+      , true
+      , false
+      ] 
+    } 
+
+
+
+
+### Options
+
+_json2prettyjson_ accepts an additional option argument, .e.g:
+
+    opts = 
+      { "indent" : "  "
+      , "sort" : true
+      }
+
+
+Note that the order has changed to be lexicographically sorted.
+However, depending on the input it might be necessary prettify 
+several times to actually get the correct lexicographic order.
 
     { "someArray" : 
       [ 1
@@ -61,19 +91,4 @@ and if we output `nice_json` we would get:
       } 
     } 
 
-Note that the order has changed to be lexicographically sorted.
-However, depending on the input it might be necessary prettify 
-several times to actually get the correct lexicographic order.
-
-### Options
-
-_json2prettyjson_ accepts an additional option argument, .e.g:
-
-    opts = 
-      { "indent" : "  "
-      , sort : true
-      }
-
-The values as given above are the defaults.
-
-
+Note also that sorting arrays might not be a good idea in some cases.
